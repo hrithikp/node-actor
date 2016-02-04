@@ -1,0 +1,31 @@
+{
+  "name": "libactor",
+  "version": "1.0.0",
+  "description": "A library for building and running actors based on the Actor Model",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hrithikp/node-libactor.git"
+  },
+  "keywords": [
+    "actors",
+    "hooks"
+  ],
+  "author": "Hrithik Patel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hrithikp/node-libactor/issues"
+  },
+  "homepage": "https://github.com/hrithikp/node-libactor#readme",
+  "dependencies": {
+    "lodash": "^4.1.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-spies": "^0.7.1",
+    "mocha": "^2.4.5"
+  }
+}
