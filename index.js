@@ -15,7 +15,7 @@ function fire (name, data) {
   if (!_.isString(name)) return false
   var args = _.values(arguments).slice(1)
   var invokes = _.has(hooks, name) ? hooks[name] : []
-  function reducer(acc, hook) {
+  function reducer (acc, hook) {
     var ret = hook.apply(null, [acc].concat(args.slice(1)))
     return ret === acc ? ret : acc
   }
@@ -26,9 +26,11 @@ function make (name, play) {
   if (!_.isString(name) && !_.size(name)) throw new RangeError('name must be a non-empty string')
   if (_.has(store, name)) throw new RangeError('name is already in use')
   var actor = new events.EventEmitter()
-  actor.name = name
-  actor.play = play
-  actor.send = _.partial(send, actor)
+  Object.defineProperties(actor, {
+    'name': {value: name, writable: false},
+    'play': {value: play, writable: false},
+    'send': {value: _.partial(send, actor), writable: false}
+  })
   store[name] = fire(getHook('actor', 'make'), actor)
   if (_.isFunction(play)) actor.on('message', _.partial(play, actor))
   return actor

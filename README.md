@@ -1,4 +1,10 @@
 # node-libactor
+
+[![Build Status](https://travis-ci.org/hrithikp/node-libactor.svg?branch=master)](https://travis-ci.org/hrithikp/node-libactor)
+[![Coverage Status](https://coveralls.io/repos/github/hrithikp/node-libactor/badge.svg?branch=master)](https://coveralls.io/github/hrithikp/node-libactor?branch=master)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+
+
 A library for building and running actors based on the [Actor Model](https://en.wikipedia.org/wiki/Actor_model)
 
 ## Install
