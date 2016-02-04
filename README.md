@@ -1,8 +1,8 @@
 # node-libactor
 
 [![Build Status](https://travis-ci.org/hrithikp/node-libactor.svg?branch=master)](https://travis-ci.org/hrithikp/node-libactor)
-[![Coverage Status](https://coveralls.io/repos/github/hrithikp/node-libactor/badge.svg?branch=master)](https://coveralls.io/github/hrithikp/node-libactor?branch=master)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+[![Coverage Status](https://coveralls.io/repos/github/hrithikp/node-libactor/badge.svg?branch=master)](https://coveralls.io/github/hrithikp/node-libactor?branch=master)
 
 
 A library for building and running actors based on the [Actor Model](https://en.wikipedia.org/wiki/Actor_model)
@@ -13,7 +13,14 @@ A library for building and running actors based on the [Actor Model](https://en.
 npm install --save libactor
 ```
 
-## Makes and Sends
+## Test
+```bash
+npm test
+```
+
+## Usage
+
+### Actor Basics
 
 ```javascript
 var actor = require('libactor');
@@ -24,12 +31,10 @@ var greeter = actor.make('greeter', function (self, msg, src) {
 	var greeting = langs[lang]
 	console.log(greeting, name)
 })
-
 greeter.send({'name': 'John, Smith', 'lang': 'en'})
-assert(greeter === actor('greeter'))
 ```
 
-## Hooks and Fires
+## Hooks Basics
 
 ```javascript
 var actor = require('libactor');
@@ -42,7 +47,7 @@ actor.hook('custom:process', function (msg) {
 // Hooks into handle for system.send
 actor.hook('system:handle', function (msg, src) {
 	// send message to another actor
-	// can also actor.fire('custom:process', msg)
+	actor.fire('custom:process', msg)
 	return msg
 })
 system.send({}) // fires the system:handle
