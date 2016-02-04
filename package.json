@@ -6,11 +6,11 @@
   "scripts": {
     "test": "standard -F && mocha",
     "coverage": "nyc -s npm test && nyc report",
-    "coveralls": "nyc -s npm test && nyc report --reporter=text-lcov | ./node_modules/coveralls/bin/coveralls.js"
+    "coveralls": "nyc -s npm test && nyc report --reporter=text-lcov | coveralls -v"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hrithikp/node-libactor.git"
+    "url": "https://github.com/hrithikp/node-libactor.git"
   },
   "keywords": [
     "actors",
