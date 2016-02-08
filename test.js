@@ -1,4 +1,5 @@
 /* global describe it */
+var _ = require('lodash')
 var chai = require('chai')
 var spies = require('chai-spies')
 chai.use(spies)
@@ -35,8 +36,26 @@ describe('actor.make(name, [play])', function () {
     var spy = chai.spy(function (self, msg, src) {})
     var act = actor.make(name, spy)
     expect(actor(name)).to.have.property('name', name)
-    actor(name).send('hello')
-    expect(spy).to.have.been.called.with(act, 'hello', actor.system)
+    act.send('hello')
+    expect(spy).to.have.been.called.with(act, {type: 'raw', data: 'hello', done: _.noop}, actor.system)
+  // expect(spy).to.have.been.called.with(act, 'hello', actor.system)
+  })
+})
+describe('actor.send(dst, msg, src)', function () {
+  it('Uses default actor interface when msg is not valid', function () {
+    var nameSend = 'foo-' + getRandomInt(20, 30)
+    var spySend = chai.spy(function (self, msg, src) {})
+    var actSend = actor.make(nameSend, spySend)
+    actSend.send()
+    expect(spySend).to.have.been.called.with(actSend, {type: 'raw', data: {}, done: _.noop}, actor.system)
+  })
+  it('uses actor.message(msg) to proccess which uses actor.take', function () {
+    var nameSend = 'foo-' + getRandomInt(30, 40)
+    var spySend = chai.spy(function (self, msg, src) {})
+    var actSend = actor.make(nameSend, spySend)
+    var msg = actor.take(null, {}, null)
+    actSend.send(msg)
+    expect(spySend).to.have.been.called.with(actSend, msg, actor.system)
   })
 })
 var fooHook = chai.spy(function (x) {})
@@ -80,16 +99,17 @@ describe('actor.find(name)', function () {
   })
 })
 describe('actor.system', function () {
-  it('should actor.fire(system:handle) when actor().send({}) ', function () {
-    var spy = chai.spy(function (x) {
+  it('should actor.fire(system:raw) when actor().send({}) ', function () {
+    var spy = chai.spy(function (x, y, z) {
       return x
     })
-    actor.hook('system:handle', spy)
+    actor.hook('system:raw', spy)
     actor().send({})
-    expect(spy).to.have.been.called()
+    var msg = {type: 'raw', data: {}, done: _.noop}
+    expect(spy).to.have.been.called.with(msg, actor.system)
   })
   it('should actor.fire(system:foo) when actor().send({type: "foo"}) ', function () {
-    var spy = chai.spy(function (x) {
+    var spy = chai.spy(function (x, y, z) {
       return x
     })
     actor.hook('system:foo', spy)

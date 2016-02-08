@@ -26,8 +26,8 @@ npm test
 var actor = require('libactor');
 var langs = {'en': 'Hello %s', 'es': 'Hola %s'}
 var greeter = actor.make('greeter', function (self, msg, src) {
-	var lang = msg.lang || 'en'
-	var name = msg.name || 'unknown'
+	var lang = msg.data.lang || 'en'
+	var name = msg.data.name || 'unknown'
 	var greeting = langs[lang]
 	console.log(greeting, name)
 })

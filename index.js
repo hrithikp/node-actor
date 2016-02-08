@@ -27,25 +27,31 @@ function make (name, play) {
   if (_.has(store, name)) throw new RangeError('name is already in use')
   var actor = new events.EventEmitter()
   Object.defineProperties(actor, {
-    'name': {value: name, writable: false},
-    'play': {value: play, writable: false},
-    'send': {value: _.partial(send, actor), writable: false}
+    'name': {value: name},
+    'play': {value: play},
+    'send': {value: _.partial(send, actor)}
   })
   store[name] = fire(getHook('actor', 'make'), actor)
   if (_.isFunction(play)) actor.on('message', _.partial(play, actor))
   return actor
 }
 exports.make = make
+function take (type, data, done) {
+  type = _.isString(type) ? type : 'raw'
+  data = _.isEmpty(data) ? {} : data
+  done = _.isFunction(done) ? done : _.noop
+  return {type: type, data: data, done: done}
+}
+exports.take = take
 function send (dst, msg, src) {
   dst = isActor(dst) ? dst : store['system']
+  msg = msg || {}
   src = actor(src)
-  return dst.emit('message', fire(getHook('actor', 'send'), msg), src)
+  return dst.emit('message', message(msg), src)
 }
 exports.send = send
 exports.system = make('system', function (self, msg, src) {
-  var type = msg.type || 'handle'
-  var data = msg.data || msg
-  fire(getHook('system', type), data, src)
+  fire(getHook('system', msg.type), msg, src)
 })
 function find (name) {
   return isActor(name) ? name : _.get(store, name, store['system'])
@@ -60,6 +66,14 @@ function isActor (obj) {
   return checks(model).every((check) => check(obj))
 }
 exports.isActor = isActor
+function message (value) {
+  var msg = {}
+  msg.data = value.data || value
+  msg.type = value.type || 'raw'
+  msg.done = value.done || _.noop
+  return take(msg.type, msg.data, msg.done)
+}
+exports.message = message
 function isValid (label, check, empty) {
   return function (store) {
     return check(_.get(store, label, empty))
