@@ -6,7 +6,8 @@
   "scripts": {
     "test": "standard -F && mocha",
     "coverage": "nyc -s npm test && nyc report",
-    "coveralls": "nyc -s npm test && nyc report --reporter=text-lcov | coveralls -v"
+    "coveralls": "nyc -s npm test && nyc report --reporter=text-lcov | coveralls -v",
+    "codeclimate": "nyc report --reporter=text-lcov | codeclimate-test-reporter"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-spies": "^0.7.1",
+    "codeclimate-test-reporter": "^0.3.1",
     "coveralls": "^2.11.6",
     "mocha": "^2.4.5",
     "nyc": "^5.5.0",

@@ -2,7 +2,9 @@
 
 [![Build Status](https://travis-ci.org/hrithikp/node-libactor.svg?branch=master)](https://travis-ci.org/hrithikp/node-libactor)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
-[![Coverage Status](https://coveralls.io/repos/github/hrithikp/node-libactor/badge.svg?branch=master)](https://coveralls.io/github/hrithikp/node-libactor?branch=master)
+[![Test Coverage](https://codeclimate.com/github/hrithikp/node-libactor/badges/coverage.svg)](https://codeclimate.com/github/hrithikp/node-libactor/coverage)
+[![Code Climate](https://codeclimate.com/github/hrithikp/node-libactor/badges/gpa.svg)](https://codeclimate.com/github/hrithikp/node-libactor)
+[![Issue Count](https://codeclimate.com/github/hrithikp/node-libactor/badges/issue_count.svg)](https://codeclimate.com/github/hrithikp/node-libactor)
 
 
 A library for building and running actors based on the [Actor Model](https://en.wikipedia.org/wiki/Actor_model)

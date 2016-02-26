@@ -60,11 +60,14 @@ describe('actor.send(dst, msg, src)', function () {
 })
 var fooHook = chai.spy(function (x) {})
 var barHook = chai.spy(function (x) { return x })
+function _hook_fire_tester (func) {
+  return function () {
+    expect(func()).to.equal(false)
+    expect(func({})).to.equal(false)
+  }
+}
 describe('actor.hook(name, hook)', function () {
-  it('returns false when no name is empty or not a string', function () {
-    expect(actor.hook()).to.equal(false)
-    expect(actor.hook({})).to.equal(false)
-  })
+  it('returns false when no name is empty or not a string', _hook_fire_tester(actor.hook))
   it('returns false when no hook is empty or not a function', function () {
     expect(actor.hook('foo')).to.equal(false)
     expect(actor.hook('foo', {})).to.equal(false)
@@ -74,10 +77,7 @@ describe('actor.hook(name, hook)', function () {
   })
 })
 describe('actor.fire(name,acc,...args)', function () {
-  it('returns false if name is empty or not a string', function () {
-    expect(actor.fire()).to.equal(false)
-    expect(actor.fire({})).to.equal(false)
-  })
+  it('returns false if name is empty or not a string', _hook_fire_tester(actor.fire))
   it('returns the acc object after applying all hooked reducers', function () {
     actor.hook('foo', barHook)
     var y = {}
