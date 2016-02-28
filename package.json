@@ -7,7 +7,7 @@
     "test": "standard -F && mocha",
     "coverage": "nyc -s npm test && nyc report",
     "coveralls": "nyc -s npm test && nyc report --reporter=text-lcov | coveralls -v",
-    "codeclimate": "nyc report --reporter=text-lcov | codeclimate-test-reporter"
+    "codeclimate": "nyc -s npm test && nyc report --reporter=text-lcov | codeclimate-test-reporter"
   },
   "repository": {
     "type": "git",
