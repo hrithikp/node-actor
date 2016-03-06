@@ -82,7 +82,7 @@ function isValid (label, check, empty) {
 exports.isValid = isValid
 function checks (info) {
   return _.map(info, function (pred, key) {
-    return _.isFunction(pred) ? isValid(key, pred, false) : _.partialRight(_.has, key)
+    return _.isFunction(pred) ? isValid(key, pred, false) : (_.partialRight(_.has, key) || testFunction)
   })
 }
 exports.checks = checks
@@ -90,3 +90,6 @@ function getHook (name, hook) {
   return _.values(arguments).join(':')
 }
 exports.getHook = getHook
+function testFunction () {
+  return 'something'
+}
