@@ -3,6 +3,7 @@ var events = require('events')
 var hooks = {}
 var store = {}
 exports = module.exports = actor
+actor.store = store
 function hook (name, hook) {
   if (!_.isString(name) || !_.isFunction(hook)) return false
   var _hooks = _.get(hooks, name, [])
@@ -24,7 +25,7 @@ function fire (name, data) {
 exports.fire = fire
 function make (name, play) {
   if (!_.isString(name) && !_.size(name)) throw new RangeError('name must be a non-empty string')
-  if (_.has(store, name)) throw new RangeError('name is already in use')
+  if (_.has(store, name)) throw new RangeError(`name '${name}' is already in use`)
   var actor = new events.EventEmitter()
   Object.defineProperties(actor, {
     'name': {value: name},
