@@ -29,7 +29,7 @@ describe('actor.make(name, [play])', function () {
     assert.throw(() => actor.make(), 'name must be a non-empty string')
   })
   it('throws an error if name is already present', function () {
-    assert.throw(() => actor.make('system'), 'name is already in use')
+    assert.throw(() => actor.make('system'), 'name \'system\' is already in use')
   })
   it('returns a newly created actor with given name and play', function () {
     var name = 'foo-' + getRandomInt(10, 20)
