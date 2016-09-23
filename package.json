@@ -1,6 +1,6 @@
 {
   "name": "libactor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A library for building and running actors based on the Actor Model",
   "main": "index.js",
   "scripts": {
